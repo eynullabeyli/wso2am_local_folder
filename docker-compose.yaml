@@ -1,0 +1,20 @@
+version: '3.8'
+services:
+  wso2am:
+    image: wso2/wso2am:latest
+    container_name: wso2am
+    ports:
+      - "9763:9763"
+      - "9443:9443"
+    environment:
+      - USER=wso2user
+      - PASS=wso2password
+    volumes:
+      - ./wso2am_repository:/home/wso2carbon/wso2am-4.0.0/repository
+      - ./deployment.toml:/home/wso2carbon/wso2am-4.0.0/repository/conf/deployment.toml
+    networks:
+      - wso2am-net
+
+networks:
+  wso2am-net:
+    driver: bridge
