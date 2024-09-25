@@ -1,0 +1,7 @@
+Steps to run wso2 inside container
+(make sure that you gave right permissions before starting commands: sudo chmod -R 755 wso2am_local_folder )
+
+select 'wso2am' folder
+1. docker build -t custom-wso2am .
+2. docker-compose build
+3. docker-compose up -d

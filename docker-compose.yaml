@@ -1,7 +1,7 @@
 version: '3.8'
 services:
   wso2am:
-    image: wso2/wso2am:latest
+    build: ./wso2am
     container_name: wso2am
     ports:
       - "9763:9763"
@@ -9,9 +9,23 @@ services:
     environment:
       - USER=wso2user
       - PASS=wso2password
+    depends_on:
+      - postgres_db
+    networks:
+      - wso2am-net
     volumes:
+      - ./deployment.toml:/home/wso2carbon/wso2am-4.0.0/repository/conf/deployment.toml:rw
       - ./wso2am_repository:/home/wso2carbon/wso2am-4.0.0/repository
-      - ./deployment.toml:/home/wso2carbon/wso2am-4.0.0/repository/conf/deployment.toml
+
+  postgres_db:
+    image: postgres:14
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: apim_user
+      POSTGRES_PASSWORD: apim_password
+      POSTGRES_DB: apim_db
+    volumes:
+      - ./postgres_data:/var/lib/postgresql/data
     networks:
       - wso2am-net
 
